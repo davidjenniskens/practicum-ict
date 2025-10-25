@@ -20,6 +20,35 @@
 
     <!-- 🧩 Eigen componenten -->
     <script>
+      // Loader component (fix bug #5251)
+      AFRAME.registerComponent('preload-assets', {
+        init: function () {
+          const assetIds = ['#blauw', '#groen', '#oranje', '#navmesh', '#castle'];
+          const promises = assetIds.map(id => {
+            const el = document.querySelector(id);
+            return new Promise((resolve, reject) => {
+              if (el.tagName === 'IMG') {
+                if (el.complete) resolve();
+                else { el.onload = resolve; el.onerror = reject; }
+              } else { // glTF assets
+                el.addEventListener('loaded', resolve);
+                el.addEventListener('error', reject);
+              }
+            });
+          });
+
+          Promise.all(promises)
+            .then(() => {
+              console.log('Alle assets zijn geladen!');
+              document.getElementById('loader').style.display = 'none';
+            })
+            .catch(err => {
+              console.error('Fout bij laden van assets:', err);
+              document.getElementById('loader').style.display = 'none'; // fallback
+            });
+        }
+      });
+
       // Component om controller inputs te luisteren
       AFRAME.registerComponent("input-listen", {
         init: function () {
@@ -100,14 +129,33 @@
         }
       });
     </script>
+
+    <!-- Loader div -->
+    <style>
+      #loader {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2em;
+        z-index: 9999;
+      }
+    </style>
   </head>
 
   <body>
+    <!-- Loader -->
+    <div id="loader">Loading VR...</div>
 
     <!-- 🌌 De VR-wereld -->
-    <a-scene  physics="debug: false"
+    <a-scene physics="debug: false"
              environment="preset: forest; lighting: point; lightPosition: -5 10 0;"
-             score-timer>
+             score-timer
+             preload-assets>
       
       <!-- 👤 Speler / camera rig -->
       <a-entity id="rig"
@@ -140,17 +188,18 @@
         <img id="oranje" src="images/oranje.png"></img>
         <a-asset-item id="castle" src="images/Castle.glb"></a-asset-item>
       </a-assets>
+
       <a-sphere class="sphere-1" src="#oranje" scale="0.5 0.5 0.5" static-body position="-5 0.5 -6"
-      animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: -5 1.0 -6"
-      animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-sphere>
+        animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: -5 1.0 -6"
+        animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-sphere>
       
       <a-sphere class="sphere-2" src="#blauw" scale="0.5 0.5 0.5" static-body position="-5 0.5 6"
-      animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: -5 1.0 6"
-      animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: easeInOutSine"></a-sphere>
+        animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: -5 1.0 6"
+        animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: easeInOutSine"></a-sphere>
       
       <a-sphere class="sphere-3" src="#groen" scale="0.5 0.5 0.5" static-body position="4.15 6.7 -3"
-      animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: 4.15 7.2 -3"
-      animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: ease-in-out-quad"></a-sphere>
+        animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: 4.15 7.2 -3"
+        animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: ease-in-out-quad"></a-sphere>
       
       <a-entity nav-mesh visible="false" position="4 0 0" gltf-model="#navmesh"></a-entity>
 
