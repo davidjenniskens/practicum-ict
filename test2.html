@@ -1,0 +1,208 @@
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1"
+    />
+    <title>AFrame Quest Collision kleur Physics</title>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+<script src="https://unpkg.com/@c-frame/aframe-physics-system@4.2.2/dist/aframe-physics-system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.6.0/dist/aframe-extras.min.js"></script> 
+     <script>
+    AFRAME.registerComponent("input-listen", {
+      init: function () {
+        //Declaration and initialization of flag
+        //which exprains grip button is pressed or not.
+        //"this.el" reffers ctlR or L in this function
+        this.el.grip = false;
+
+        //Called when trigger is pressed 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggerdown", function (e) {
+          console.log("triggerdown", e.target.id);
+        });
+  
+        //Called when trigger is release 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggerup", function (e) {
+          console.log("triggerup", e.target.id);
+        });
+        
+        //Called when trigger is triggertouchstart 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggertouchstart", function (e) {
+          console.log("triggertouchstart", e.target.id);
+        });
+        
+        //Called when trigger is triggertouchend 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggertouchend", function (e) {
+          console.log("triggertouchend", e.target.id);
+
+          //Setting grab flag as true.
+          this.grab = true;
+
+        });
+        
+        //Called when trigger is changed 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggerchanged", function (e) {
+          console.log("triggerchanged", e.target.id);
+
+          //Setting grab flag as false.
+          this.grab = false;
+
+        });
+        
+        //Grip Pressed
+        this.el.addEventListener("gripdown", function (e) {
+          //Setting grip flag as true.
+          this.grip = true;
+          
+          //document.getElementById("text").setAttribute("value", "gripdown");
+           console.log("gripdown", e.target.id);
+        });
+        
+        //Grip Released
+        this.el.addEventListener("gripup", function (e) {
+          //Setting grip flag as false.
+          this.grip = false;
+          
+          //document.getElementById("text").setAttribute("value", "gripup");
+          console.log("gripdown", e.target.id);
+        });
+        
+        
+        //Called when thumbstickchanged  
+        //select button in WebXR debugger
+        this.el.addEventListener("thumbstickchanged", function (e) {
+          console.log("thumbstickchanged", e.target.id);
+        });
+        
+        
+        //Called when abuttondown  
+        this.el.addEventListener("abuttondown", function (e) {
+          console.log("abuttondown", e.target.id);
+        });
+        
+        //Called when bbuttonchanged  
+        this.el.addEventListener("bbuttonchanged", function (e) {
+          console.log("bbuttonchanged", e.target.id);
+        });
+        
+        //Called when xbuttonchanged  
+        this.el.addEventListener("xbuttonchanged", function (e) {
+          console.log("xbuttonchanged", e.target.id);
+        });
+        
+        //Called when ybuttonchanged  
+        this.el.addEventListener("ybuttonchanged", function (e) {
+          console.log("ybuttonchanged", e.target.id);
+        });
+        
+        //Called when surfacechanged  
+        this.el.addEventListener("surfacechanged", function (e) {
+          console.log("surfacechanged", e.target.id);
+        });
+        
+        this.hitEl;
+        this.el.addEventListener("hit", function(e){
+            //haal het element op waar we tegenaan zitten
+            const hitEl = e.detail.el;
+            //check of het element null is
+            if (!hitEl || this.hitEl|| hitEl.attributes.color.value == "purple") { return; }
+            console.log("hit");
+            console.log(hitEl.attributes.color.value);
+            hitEl.attributes.color.value = "purple";
+            console.log(hitEl.attributes.color.value);
+
+            if( this.grab == true){
+              console.log("hit");
+              console.log(hitEl.attributes.color);
+              hitEl.attributes.color.value = "yellow";
+              console.log(hitEl.attributes.color);
+            }
+          });
+
+        
+      }
+    });
+
+
+    </script> 
+  </head>
+  <body>
+    <a-scene physics="debug: true">
+      <!-- Player -->
+      <a-entity camera look-controls>
+        <a-entity id="ctlL" meta-touch-controls="hand: left" input-listen static-body="shape: sphere; sphereRadius: 0.02;" sphere-collider="objects: .botsen;"></a-entity>
+        <a-entity id="ctlR" meta-touch-controls="hand: right" input-listen static-body="shape: sphere; sphereRadius: 0.02;" sphere-collider="objects: .botsen;"></a-entity>
+      </a-entity>
+
+      <a-assets>
+        <img id="platform" src="https://i.imgur.com/mYmmbrp.jpg" />
+      </a-assets>
+      <a-box
+        class="botsen"
+        dynamic-body
+        position="0 10.25 -3"
+        width="0.5"
+        height="0.5"
+        depth="0.5"
+        color="red"
+      ></a-box>
+      <a-box
+        class="botsen"
+        dynamic-body
+        position="-1 10.25 -3"
+        width="0.5"
+        height="0.5"
+        depth="0.5"
+        color="green"
+      ></a-box>
+      <a-box
+        class="botsen"
+        dynamic-body
+        position="1 10.25 -3"
+        width="0.5"
+        height="0.5"
+        depth="0.5"
+        color="blue"
+      ></a-box>
+
+      <a-box
+        class="botsen"
+        position="-1 2 -3"
+        rotation="0 0 0"
+        src=""
+        color="#4CC3D9"
+        static-body
+      ></a-box>
+      <a-box
+        position="1 2 -3"
+        rotation="0 0 0"
+        src=""
+        color="#4CC3D9"
+        static-body
+      ></a-box>
+      <a-box
+        position="0 2 -5"
+        rotation="45 0 45 "
+        src=""
+        color="#4CC3D9"
+        static-body
+      ></a-box>
+
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"
+        static-body
+      ></a-plane>
+    </a-scene>
+  </body>
+</html>

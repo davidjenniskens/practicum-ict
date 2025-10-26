@@ -103,9 +103,8 @@
   </head>
 
   <body>
-
     <!-- 🌌 De VR-wereld -->
-    <a-scene  physics="debug: false"
+    <a-scene  physics="debug: true"
              environment="preset: forest; lighting: point; lightPosition: -5 10 0;"
              score-timer>
       
@@ -132,26 +131,51 @@
         </a-entity>
       </a-entity>
 
-      <!-- 🌍 NavMesh & Model voorbeeld -->
+      
       <a-assets>
-        <a-asset-item id="navmesh" src="images/Castle-navmesh.glb"></a-asset-item>
-        <img id="blauw" src="images/blauw.png"></img>
-        <img id="groen" src="images/groen.png"></img>
-        <img id="oranje" src="images/oranje.png"></img>
-        <a-asset-item id="castle" src="images/Castle.glb"></a-asset-item>
+        <a-asset-item id="navmesh" src="https://c-frame.github.io/aframe-extras/examples/assets/castle/Castle-navmesh.glb"></a-asset-item>
+        <!-- <a-asset-item id="navmesh" src="images/Castle-navmesh.glb"></a-asset-item> -->
+        <img id="blauw" src="https://i.ibb.co/ZR50Bnzw/blauw.png"></img>
+        <img id="blauw11" src="images/blauw11.png"></img>
+        <img id="blauw18" src="images/blauw18.png"></img>
+        <img id="blauw19" src="images/blauw19.png"></img>
+        
+        <img id="groen" src="https://i.ibb.co/4gD5Qm8D/groen.png"></img>
+        <img id="groen0" src="images/groen0.png"></img>
+        <img id="groen4" src="images/groen4.png"></img>
+        <img id="groen5" src="images/groen5.png"></img>
+        
+        <img id="oranje" src="https://i.ibb.co/ZpL5ZTXg/oranje.png"></img>
+        <img id="oranje65" src="images/oranje65.png"></img>
+        <img id="oranje70" src="images/oranje70.png"></img>
+        <img id="oranje90" src="images/oranje90.png"></img>
+        <a-asset-item id="castle" src="https://c-frame.github.io/aframe-extras/examples/assets/castle/Castle.glb"></a-asset-item>
+        <!-- <a-asset-item id="castle" src="images/Castle.glb"></a-asset-item> -->
       </a-assets>
       <a-sphere class="sphere-1" src="#oranje" scale="0.5 0.5 0.5" static-body position="-5 0.5 -6"
       animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: -5 1.0 -6"
-      animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-sphere>
-      
+      animation__rotate="property: rotation; to: 0 -360 0; loop: true; dur: 4000; easing: linear"></a-sphere>
+      <a-box position="-3 1 -7" src="#oranje65"  depth="0.25" height="0.25" width="0.4" static-body></a-box>
+      <a-box position="-3 1.33 -7" src="#oranje70" depth="0.25" height="0.25" width="0.4" static-body></a-box>
+      <a-box position="-3 1.66 -7" src="#oranje90" depth="0.25" height="0.25" width="0.4" static-body></a-box>
+
+
       <a-sphere class="sphere-2" src="#blauw" scale="0.5 0.5 0.5" static-body position="-5 0.5 6"
       animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: -5 1.0 6"
-      animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: easeInOutSine"></a-sphere>
-      
+      animation__rotate="property: rotation; to: 0 -360 0; loop: true; dur: 4000; easing: easeInOutSine"></a-sphere>
+      <a-box position="-3 1 7" src="#blauw11"  depth="0.25" height="0.25" width="0.4" static-body></a-box>
+      <a-box position="-3 1.33 7" src="#blauw18" depth="0.25" height="0.25" width="0.4" static-body></a-box>
+      <a-box position="-3 1.66 7" src="#blauw19" depth="0.25" height="0.25" width="0.4" static-body></a-box>
+
+
       <a-sphere class="sphere-3" src="#groen" scale="0.5 0.5 0.5" static-body position="4.15 6.7 -3"
       animation__position="property: position; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: 4.15 7.2 -3"
-      animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: ease-in-out-quad"></a-sphere>
-      
+      animation__rotate="property: rotation; to: 0 -360 0; loop: true; dur: 4000; easing: linear"></a-sphere>
+      <a-box position="2.90 7 -2" src="#groen0"  depth="0.25" height="0.25" width="0.4" static-body></a-box>
+      <a-box position="2.90 7.33 -2" src="#groen4" depth="0.25" height="0.25" width="0.4" static-body></a-box>
+      <a-box position="2.90 7.66 -2" src="#groen5" depth="0.25" height="0.25" width="0.4" static-body></a-box>
+
+
       <a-entity nav-mesh visible="false" position="4 0 0" gltf-model="#navmesh"></a-entity>
 
       <a-entity position="4 0 0" scale="3 3 3" gltf-model="#castle"></a-entity>
