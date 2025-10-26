@@ -6,21 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no"/>
     <title>Versterk je Geheugen</title>
 
-    <!-- ✅ BASIS: A-Frame engine -->
+    
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-
-    <!-- 🌍 Extra componenten: movement, navmesh, enz. -->
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.6.0/dist/aframe-extras.min.js"></script>
-
-    <!-- ⚙️ Physics: zwaartekracht en botsingen -->
     <script src="https://unpkg.com/@c-frame/aframe-physics-system@4.2.2/dist/aframe-physics-system.min.js"></script>
-
-    <!-- 🌲 Omgeving: snel bos, woestijn, etc. genereren -->
     <script src="https://cdn.jsdelivr.net/npm/aframe-environment-component@1.5.0/dist/aframe-environment-component.min.js"></script>
 
-    <!-- 🧩 Eigen componenten -->
+    <!-- Scoreboard -->
     <script>
-      // Component om controller inputs te luisteren
+      // Component om controller inputs te luisteren, werkt, maar niet gelukt om dingen vast te pakken.
       AFRAME.registerComponent("input-listen", {
         init: function () {
           this.el.grip = false;
@@ -54,13 +48,13 @@
       // Scorebord en timer component
       AFRAME.registerComponent("score-timer", {
   schema: {
-    duration: { type: 'int', default: 120 } // seconden
+    duration: { type: 'int', default: 120 }
   },
   init: function () {
     const scene = this.el;
     let timeLeft = this.data.duration;
 
-    // ⏱ Timer text
+    // Timer tekst
     const timerText = document.createElement("a-text");
     timerText.setAttribute("value", "Je hebt nog:\n" + timeLeft + " seconden");
     timerText.setAttribute("position", "0 5 -7");
@@ -72,14 +66,14 @@
 
     // Achtergrondblok
     const bg = document.createElement("a-plane");
-    bg.setAttribute("width", 2);       // passend bij tekst
+    bg.setAttribute("width", 2);      
     bg.setAttribute("height", 1);
     bg.setAttribute("color", "red");
     bg.setAttribute("position", "0 0 -0.05");
     bg.setAttribute("side", "double");
     timerText.appendChild(bg);
 
-    // Gele border
+    // Border
     const border = document.createElement("a-plane");
     border.setAttribute("width", 2.1);
     border.setAttribute("height", 1.1);
